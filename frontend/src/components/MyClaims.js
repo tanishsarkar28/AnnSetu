@@ -9,7 +9,7 @@ function MyClaims({ user }) {
 
   const fetchMyClaims = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/donations/my-claims?userId=${user._id}`);
+      const res = await axios.get(`https://annsetu.onrender.com/api/donations/my-claims?userId=${user._id}`);
       setClaims(res.data);
     } catch (err) { console.error(err); }
   };
@@ -35,7 +35,7 @@ function MyClaims({ user }) {
       // 2. Action
       if(result.isConfirmed) {
           try {
-              await axios.put(`http://localhost:5000/api/donations/update/${id}`, { status: 'collected' });
+              await axios.put(`https://annsetu.onrender.com/api/donations/update/${id}`, { status: 'collected' });
               
               Swal.fire({
                   title: 'Great Job!',

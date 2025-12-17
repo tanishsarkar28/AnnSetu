@@ -41,7 +41,7 @@ function DonateForm({ refreshList }) {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/donations/add', formData);
+      await axios.post('https://annsetu.onrender.com/api/donations/add', formData);
       toast.success("🎉 Food Listed Successfully!");
       setFormData({ 
         donorName: '', foodItem: '', quantity: '', location: '', 

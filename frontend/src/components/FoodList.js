@@ -31,7 +31,7 @@ function FoodList({ donations, refreshList, userRole, user }) {
     // 3. Agar user ne "Yes" click kiya
     if (result.isConfirmed) {
         try {
-            await axios.put(`http://localhost:5000/api/donations/update/${id}`, { 
+            await axios.put(`https://annsetu.onrender.com/api/donations/update/${id}`, { 
                 status: 'claimed',
                 claimedBy: user._id 
             });
