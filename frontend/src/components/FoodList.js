@@ -6,16 +6,9 @@ import { FaMapMarkedAlt, FaUser, FaBoxOpen, FaClock } from 'react-icons/fa';
 
 function FoodList({ donations, refreshList, userRole, user }) {
 
-  // Logic Update: Ab hum 'event' (e) bhi le rahe hain taaki check kar sakein slider ON hai ya OFF
   const handleClaim = async (e, id) => {
-    
-    // 1. FIX: Agar user Slider ko OFF (Deselect) kar raha hai, toh kuch mat karo.
-    // (Popup sirf tab aana chahiye jab slider ON ho raha ho)
-    if (!e.target.checked) {
-        return; 
-    }
+    if (!e.target.checked) return;
 
-    // 2. Stylish Confirmation Popup
     const result = await Swal.fire({
         title: 'Claim this Food?',
         text: "You are about to mark this donation as claimed!",
@@ -28,9 +21,9 @@ function FoodList({ donations, refreshList, userRole, user }) {
         color: '#fff'
     });
 
-    // 3. Agar user ne "Yes" click kiya
     if (result.isConfirmed) {
         try {
+            // 👇 IMPORTANT CHANGE: URL Updated
             await axios.put(`https://annsetu.onrender.com/api/donations/update/${id}`, { 
                 status: 'claimed',
                 claimedBy: user._id 
@@ -49,18 +42,15 @@ function FoodList({ donations, refreshList, userRole, user }) {
         } catch (err) {
             console.error(err);
             toast.error("Failed to claim food.");
-            // Error aaya toh slider wapas band kar do
             e.target.checked = false;
         }
     } else {
-        // 4. IMPORTANT: Agar user ne "Cancel" kiya, toh Slider ko wapas OFF kar do
-        // Warna wo ON reh jayega aur user confuse hoga
         e.target.checked = false;
     }
   };
 
   const openMap = (lat, lng) => {
-    const url = `https://www.google.com/maps?q=${lat},${lng}`;
+    const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
     window.open(url, '_blank');
   };
 
@@ -91,7 +81,6 @@ function FoodList({ donations, refreshList, userRole, user }) {
             {userRole === 'ngo' ? (
               <>
                 <label className="switch">
-                  {/* Yahan humne '(e)' pass kiya hai */}
                   <input type="checkbox" onChange={(e) => handleClaim(e, food._id)} />
                   <span className="slider"></span>
                 </label>

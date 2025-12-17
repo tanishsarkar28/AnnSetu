@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Swal from 'sweetalert2'; // Stylish Popup
+import Swal from 'sweetalert2'; 
 import { FaCheckCircle, FaMapMarkedAlt, FaPhoneAlt } from 'react-icons/fa';
 
 function MyClaims({ user }) {
@@ -9,6 +9,7 @@ function MyClaims({ user }) {
 
   const fetchMyClaims = async () => {
     try {
+      // 👇 IMPORTANT CHANGE: URL Updated
       const res = await axios.get(`https://annsetu.onrender.com/api/donations/my-claims?userId=${user._id}`);
       setClaims(res.data);
     } catch (err) { console.error(err); }
@@ -19,22 +20,21 @@ function MyClaims({ user }) {
   }, [user]);
 
   const handleCollect = async (id) => {
-      // 1. Stylish Confirmation Popup
       const result = await Swal.fire({
           title: 'Mark as Collected?',
           text: "Have you picked up the food successfully?",
           icon: 'question',
           showCancelButton: true,
-          confirmButtonColor: '#10b981', // Green
+          confirmButtonColor: '#10b981',
           cancelButtonColor: '#ef4444',
           confirmButtonText: 'Yes, Collected!',
           background: '#1e293b',
           color: '#fff'
       });
 
-      // 2. Action
       if(result.isConfirmed) {
           try {
+              // 👇 IMPORTANT CHANGE: URL Updated
               await axios.put(`https://annsetu.onrender.com/api/donations/update/${id}`, { status: 'collected' });
               
               Swal.fire({
@@ -52,13 +52,13 @@ function MyClaims({ user }) {
   };
 
   const openMap = (lat, lng) => {
-    const url = `https://www.google.com/maps?q=${lat},${lng}`;
+    const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
     window.open(url, '_blank');
   };
 
   return (
     <div>
-      <h2 style={{color: '#10b981', borderBottomColor: '#064e3b'}}>✅ My Claims (To be collected)</h2>
+      <h2 style={{color: '#10b981', borderBottomColor: '#064e3b'}}>✅ My Claims</h2>
       {claims.length === 0 ? <p style={{textAlign:'center', color:'#64748b'}}>You haven't claimed any food yet.</p> : null}
 
       {claims.map((food) => (
