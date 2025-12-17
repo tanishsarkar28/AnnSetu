@@ -1,30 +1,38 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const cors = require('cors');
+require('dotenv').config();
 
-// Routes Import karna
+// Routes Import
+const authRoutes = require('./routes/authRoutes');
 const donationRoutes = require('./routes/donationRoutes');
-const authRoutes = require('./routes/authRoutes'); // <--- Yeh naya add kiya hai
-
-dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(express.json()); // JSON data padhne ke liye
-app.use(cors()); // Frontend aur Backend connect karne ke liye
+// --- CORS CONFIGURATION (Mobile Fix) ---
+app.use(cors({
+    origin: '*', // Iska matlab: Kisi bhi source (Mobile/Laptop) se request accept karo
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
+// ---------------------------------------
+
+app.use(express.json());
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB Connected Successfully"))
-    .catch((err) => console.log("MongoDB Connection Error: ", err));
+    .then(() => console.log('MongoDB Connected Successfully'))
+    .catch((err) => console.log('MongoDB Connection Error: ', err));
 
-// API Routes
-app.use('/api/auth', authRoutes);        // <--- Login aur Register ke liye
-app.use('/api/donations', donationRoutes); // <--- Food Donation ke liye
+// Routes Use
+app.use('/api/auth', authRoutes);
+app.use('/api/donations', donationRoutes);
 
-// Server Start
+// Testing Route (Browser par check karne ke liye)
+app.get('/', (req, res) => {
+    res.send('Ann-Setu Backend is Running...');
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
