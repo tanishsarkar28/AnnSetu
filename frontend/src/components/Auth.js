@@ -12,7 +12,9 @@ function Auth({ onLogin }) {
     e.preventDefault();
     const endpoint = isRegister ? 'register' : 'login';
     try {
-      const res = await axios.post(`http://localhost:5000/api/auth/${endpoint}`, formData);
+      // 👇 YAHAN CHANGE KIYA HAI (Render Link dala hai)
+      const res = await axios.post(`https://annsetu.onrender.com/api/auth/${endpoint}`, formData);
+      
       if (!isRegister) {
         toast.success(`Welcome back, ${res.data.username}!`);
         onLogin(res.data); 
@@ -21,6 +23,7 @@ function Auth({ onLogin }) {
         setIsRegister(false);
       }
     } catch (err) {
+      console.error(err); // Error console mein dekhne ke liye
       toast.error("Error: Wrong credentials or user exists.");
     }
   };
