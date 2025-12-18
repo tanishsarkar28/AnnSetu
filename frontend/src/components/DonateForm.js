@@ -41,7 +41,7 @@ function DonateForm({ refreshList }) {
     }
 
     try {
-      // 👇 IMPORTANT CHANGE: Localhost hataya, Render URL lagaya
+      // 👇FIX: Localhost hata kar Render Link lagaya
       await axios.post('https://annsetu.onrender.com/api/donations/add', formData);
       
       toast.success("🎉 Food Listed Successfully!");

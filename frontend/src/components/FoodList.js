@@ -23,7 +23,7 @@ function FoodList({ donations, refreshList, userRole, user }) {
 
     if (result.isConfirmed) {
         try {
-            // 👇 IMPORTANT CHANGE: URL Updated
+            // 👇 FIX: Render Link Updated
             await axios.put(`https://annsetu.onrender.com/api/donations/update/${id}`, { 
                 status: 'claimed',
                 claimedBy: user._id 
