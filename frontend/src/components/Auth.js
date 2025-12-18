@@ -12,7 +12,7 @@ function Auth({ onLogin }) {
     e.preventDefault();
     const endpoint = isRegister ? 'register' : 'login';
     try {
-      // 👇 YAHAN CHANGE KIYA HAI (Render Link dala hai)
+      // ✅ Render URL Sahi Hai
       const res = await axios.post(`https://annsetu.onrender.com/api/auth/${endpoint}`, formData);
       
       if (!isRegister) {
@@ -23,10 +23,12 @@ function Auth({ onLogin }) {
         setIsRegister(false);
       }
     } catch (err) {
-      console.error(err); // Error console mein dekhne ke liye
-      toast.error("Error: Wrong credentials or user exists.");
+      console.error("Registration Error:", err);
+      // ✅ Better Error Message Sahi Hai
+      const errorMsg = err.response?.data?.message || err.message || "Registration Failed";
+      toast.error("Error: " + errorMsg);
     }
-  };
+  }; // 👈 Ye wala bracket missing tha tumhare code mein
 
   return (
     <div className="form-box" style={{ maxWidth: '400px', margin: '50px auto' }}>
