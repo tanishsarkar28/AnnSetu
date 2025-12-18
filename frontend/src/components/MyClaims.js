@@ -9,8 +9,8 @@ function MyClaims({ user }) {
 
   const fetchMyClaims = async () => {
     try {
-      // 👇 FIX: Render Link Updated
-      const res = await axios.get(`https://annsetu.onrender.com/api/donations/my-claims?userId=${user._id}`);
+      // Use configured API url
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/donations/my-claims?userId=${user._id}`);
       setClaims(res.data);
     } catch (err) { console.error(err); }
   };
@@ -34,8 +34,8 @@ function MyClaims({ user }) {
 
       if(result.isConfirmed) {
           try {
-              // 👇 FIX: Render Link Updated
-              await axios.put(`https://annsetu.onrender.com/api/donations/update/${id}`, { status: 'collected' });
+              // Use configured API url
+              await axios.put(`${process.env.REACT_APP_API_URL}/api/donations/update/${id}`, { status: 'collected' });
               
               Swal.fire({
                   title: 'Great Job!',

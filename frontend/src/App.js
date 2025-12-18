@@ -16,7 +16,7 @@ function App() {
 
   const fetchDonations = async () => {
     try {
-      const res = await axios.get('https://annsetu.onrender.com/api/donations/all');
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/donations/all`);
       setDonations(res.data);
     } catch (err) { console.log(err); }
   };

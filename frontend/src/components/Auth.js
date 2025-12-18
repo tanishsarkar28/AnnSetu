@@ -12,8 +12,8 @@ function Auth({ onLogin }) {
     e.preventDefault();
     const endpoint = isRegister ? 'register' : 'login';
     try {
-      // ✅ Render URL Sahi Hai
-      const res = await axios.post(`https://annsetu.onrender.com/api/auth/${endpoint}`, formData);
+      // Use environment-configured API base URL for flexibility
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/${endpoint}`, formData);
       
       if (!isRegister) {
         toast.success(`Welcome back, ${res.data.username}!`);

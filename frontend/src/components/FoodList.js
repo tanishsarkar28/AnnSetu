@@ -23,11 +23,11 @@ function FoodList({ donations, refreshList, userRole, user }) {
 
     if (result.isConfirmed) {
         try {
-            // 👇 FIX: Render Link Updated
-            await axios.put(`https://annsetu.onrender.com/api/donations/update/${id}`, { 
-                status: 'claimed',
-                claimedBy: user._id 
-            });
+        // Use configured API url
+        await axios.put(`${process.env.REACT_APP_API_URL}/api/donations/update/${id}`, { 
+          status: 'claimed',
+          claimedBy: user._id 
+        });
             
             Swal.fire({
                 title: 'Success!',

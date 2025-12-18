@@ -41,8 +41,8 @@ function DonateForm({ refreshList }) {
     }
 
     try {
-      // 👇FIX: Localhost hata kar Render Link lagaya
-      await axios.post('https://annsetu.onrender.com/api/donations/add', formData);
+      // Use configured API url
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/donations/add`, formData);
       
       toast.success("🎉 Food Listed Successfully!");
       setFormData({ 
